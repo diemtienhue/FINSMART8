@@ -131,7 +131,7 @@ const App: React.FC = () => {
           <button onClick={() => setActiveTab('loans')} className="text-xs font-bold text-blue-600">Xem tất cả</button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {projects.filter(p => p.status === 'Published').slice(0, 6).map(p => (
             <ProjectCard key={p.id} project={p} onOpenDetail={setSelectedProject} />
           ))}
@@ -141,10 +141,10 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      <div className="flex flex-1">
-        {/* Sidebar Desktop */}
-        <aside className="hidden lg:flex w-72 flex-col fixed inset-y-0 left-0 bg-white border-r border-slate-100 p-6 z-40">
+    <div className="min-h-screen bg-slate-50 flex flex-col overflow-x-hidden">
+      <div className="flex flex-1 w-full">
+        {/* DESKTOP SIDEBAR */}
+        <aside className="hidden lg:flex lg:flex-col lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-64 bg-white border-r border-slate-100 shadow-sm z-40 overflow-hidden">
           <div className="flex items-center gap-3 mb-10">
             <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center shadow-lg">
               <Building2 size={24} />
@@ -152,7 +152,7 @@ const App: React.FC = () => {
             <span className="text-2xl font-black text-slate-800 tracking-tight">FINSMART</span>
           </div>
 
-          <nav className="flex-1 space-y-2">
+          <nav className="flex-1 space-y-2 p-6">
             {[
               { id: 'home', label: 'Trang chủ', icon: Home, color: 'blue' },
               { id: 'cards', label: 'Thẻ tín dụng', icon: CreditCard, color: 'blue' },
@@ -174,7 +174,7 @@ const App: React.FC = () => {
           </nav>
 
           {/* Contact Hub - Icon Only Design */}
-          <div className="mt-auto p-5 bg-slate-50 rounded-[2.5rem] border border-slate-200/50 shadow-inner">
+          <div className="mt-auto p-5 bg-slate-50 rounded-[2.5rem] border border-slate-200/50 shadow-inner mx-6 mb-6">
             <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-4 text-center">Hỗ trợ trực tuyến</p>
             <div className="flex items-center justify-center gap-4">
               <button
@@ -196,8 +196,8 @@ const App: React.FC = () => {
           </div>
         </aside>
 
-        {/* Main Content */}
-        <main className="flex-1 lg:pl-72 flex flex-col">
+        {/* MAIN CONTENT */}
+        <main className="flex-1 lg:ml-64 pb-20 lg:pb-8 overflow-x-hidden w-full">
           {/* Top Navbar */}
           <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-100 h-16 flex items-center px-4 sm:px-8">
             <div className="lg:hidden w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center mr-3 shadow-md">
@@ -222,7 +222,7 @@ const App: React.FC = () => {
           </header>
 
           {/* Body Content */}
-          <div className="max-w-6xl mx-auto p-4 sm:p-8 w-full">
+          <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 w-full">
             {activeTab === 'home' && <HomeSection />}
 
             {(activeTab === 'loans' || activeTab === 'cards') && (
