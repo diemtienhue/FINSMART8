@@ -110,6 +110,47 @@ const AdminDashboard: React.FC = () => {
   const [editorSubTab, setEditorSubTab] = useState<'card' | 'popup'>('card');
   const [isSyncing, setIsSyncing] = useState(false);
 
+  // ✅ CRITICAL FIX: Load data from Supabase when Admin mounts
+  useEffect(() => {
+    const loadAdminData = async () => {
+      try {
+        // Import getAllProjects and getHeroSettings
+        const { getAllProjects, getHeroSettings } = await import('../services/supabaseService');
+
+        // Load projects from Supabase
+        const dbProjects = await getAllProjects();
+        if (dbProjects && dbProjects.length > 0) {
+          setProjects(dbProjects);
+          console.log('✅ Loaded projects from Supabase:', dbProjects.length);
+        } else {
+          // Fallback to localStorage
+          const savedProjects = localStorage.getItem('finsmart_projects');
+          if (savedProjects) {
+            setProjects(JSON.parse(savedProjects));
+          }
+        }
+
+        // Load hero settings from Supabase
+        const heroData = await getHeroSettings();
+        if (heroData) {
+          setAppSettings(heroData);
+          console.log('✅ Loaded hero settings from Supabase');
+        }
+      } catch (error) {
+        console.error('❌ Error loading admin data from Supabase:', error);
+        // Fallback to localStorage
+        const savedProjects = localStorage.getItem('finsmart_projects');
+        if (savedProjects) {
+          setProjects(JSON.parse(savedProjects));
+        }
+      }
+    };
+
+    if (isAuthenticated) {
+      loadAdminData();
+    }
+  }, [isAuthenticated]);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (username === ADMIN_CREDENTIALS.user && password === ADMIN_CREDENTIALS.pass) {
@@ -118,6 +159,7 @@ const AdminDashboard: React.FC = () => {
       alert('Thông tin quản trị không chính xác!');
     }
   };
+
 
   const syncWithDatabase = async () => {
     setIsSyncing(true);
