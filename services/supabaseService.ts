@@ -419,14 +419,20 @@ export const getPartnerLogos = async (): Promise<PartnerLogoRow[]> => {
  * Đồng bộ tất cả sản phẩm (upsert)
  */
 export const syncAllProjects = async (projects: Project[]): Promise<void> => {
-    const rows = projects.map(mapProjectToRow);
+    // Remove id field to let database auto-generate UUIDs
+    const rows = projects.map(project => {
+        const row = mapProjectToRow(project);
+        delete row.id;  // Let database generate UUID
+        return row;
+    });
 
     const { error } = await supabase
         .from('projects')
-        .upsert(rows as never[], { onConflict: 'id' });
+        .upsert(rows as never[], { onConflict: 'name' });  // Use name as unique key
 
     if (error) {
         console.error('Error syncing projects:', error);
         throw error;
     }
 };
+
