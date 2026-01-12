@@ -50,17 +50,23 @@ const App: React.FC = () => {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  // Check for admin hash
+  // Check for admin hash or path
   useEffect(() => {
-    const checkAdminHash = () => {
-      if (window.location.hash === '#admin') {
+    const checkAdminAccess = () => {
+      // Check both hash (#admin) and pathname (/admin)
+      if (window.location.hash === '#admin' || window.location.pathname === '/admin') {
         setShowAdmin(true);
       }
     };
 
-    checkAdminHash();
-    window.addEventListener('hashchange', checkAdminHash);
-    return () => window.removeEventListener('hashchange', checkAdminHash);
+    checkAdminAccess();
+    window.addEventListener('hashchange', checkAdminAccess);
+    window.addEventListener('popstate', checkAdminAccess);
+
+    return () => {
+      window.removeEventListener('hashchange', checkAdminAccess);
+      window.removeEventListener('popstate', checkAdminAccess);
+    };
   }, []);
 
   const filteredProjects = projects.filter(p => {
