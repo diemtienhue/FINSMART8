@@ -23,8 +23,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenDetail }) => {
       {/* HEADER SECTION */}
       {isLoan ? (
         <div className="p-5 pb-2">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-14 h-14 bg-slate-50 rounded-full border border-slate-100 flex items-center justify-center overflow-hidden">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 bg-white rounded-full border-2 border-slate-200 flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
               <img src={project.logo} alt="logo" className="w-full h-full object-cover" />
             </div>
             <span className="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black rounded-lg uppercase tracking-wider">

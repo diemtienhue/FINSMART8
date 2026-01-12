@@ -364,12 +364,14 @@ const App: React.FC = () => {
             </div>
 
             {/* Menu Items */}
-            <nav className="flex-1 overflow-y-auto p-6 space-y-2">
+            <nav className="flex-1 overflow-y-auto p-6 space-y-3">
               {[
-                { id: 'cards', label: 'Thẻ tín dụng', icon: CreditCard, color: 'blue' },
-                { id: 'loans', label: 'Vay tiêu dùng', icon: DollarSign, color: 'emerald' },
-                { id: 'insurance', label: 'Bảo hiểm ô tô giá rẻ', icon: Shield, color: 'purple' },
-                { id: 'profile', label: 'Hướng dẫn đăng ký', icon: FileText, color: 'orange' },
+                { id: 'cards', label: 'Thẻ tín dụng', icon: CreditCard, color: 'blue', special: false },
+                { id: 'loans', label: 'Vay tiêu dùng', icon: DollarSign, color: 'emerald', special: false },
+                { id: 'insurance', label: 'Bảo hiểm ô tô giá rẻ', icon: Shield, color: 'purple', special: false },
+                { id: 'comparison', label: 'So sánh thẻ', icon: Layers, color: 'cyan', special: false },
+                { id: 'calc', label: 'Ước lượng khoản vay', icon: Calculator, color: 'indigo', special: false },
+                { id: 'profile', label: 'Hướng dẫn đăng ký', icon: FileText, color: 'orange', special: true },
               ].map(item => (
                 <button
                   key={item.id}
@@ -377,16 +379,25 @@ const App: React.FC = () => {
                     setActiveTab(item.id as any);
                     setIsSidebarOpen(false);
                   }}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all hover:scale-[1.02] ${activeTab === item.id
-                      ? `bg-${item.color}-50 text-${item.color}-700 shadow-sm`
-                      : 'bg-white hover:bg-slate-100 text-slate-700'
+                  className={`w-full flex items-center gap-4 p-4 rounded-3xl transition-all hover:scale-[1.02] ${item.special
+                      ? 'bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-lg shadow-orange-200 animate-pulse hover:shadow-xl'
+                      : activeTab === item.id
+                        ? `bg-${item.color}-50 text-${item.color}-700 shadow-sm`
+                        : 'bg-white hover:bg-slate-100 text-slate-700'
                     }`}
                 >
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${activeTab === item.id ? `bg-${item.color}-100` : 'bg-slate-100'
+                  <div className={`w-11 h-11 rounded-2xl flex items-center justify-center ${item.special
+                      ? 'bg-white/20'
+                      : activeTab === item.id ? `bg-${item.color}-100` : 'bg-slate-100'
                     }`}>
-                    <item.icon size={20} />
+                    <item.icon size={22} strokeWidth={item.special ? 2.5 : 2} />
                   </div>
-                  <span className="font-bold text-sm">{item.label}</span>
+                  <div className="flex-1 text-left">
+                    <span className="font-bold text-sm block">{item.label}</span>
+                    {item.special && (
+                      <span className="text-[10px] opacity-90 font-medium">⭐ Nổi bật</span>
+                    )}
+                  </div>
                 </button>
               ))}
             </nav>

@@ -20,12 +20,13 @@ const RegistrationGuide: React.FC<RegistrationGuideProps> = ({ projects }) => {
         <div className="max-w-5xl mx-auto px-3 sm:px-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {/* Header */}
             <div className="text-center mb-8">
-                <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-2xl shadow-blue-200">
-                    <FileText size={36} strokeWidth={2.5} />
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-2xl shadow-blue-200">
+                    <FileText size={32} className="sm:hidden" strokeWidth={2.5} />
+                    <FileText size={36} className="hidden sm:block" strokeWidth={2.5} />
                 </div>
-                <h2 className="text-4xl font-black text-slate-900 tracking-tight mb-3">Hướng dẫn đăng ký</h2>
-                <p className="text-slate-600 font-medium max-w-2xl mx-auto text-sm leading-relaxed">
-                    Hướng dẫn chi tiết từng bước để đăng ký các sản phẩm vay và thẻ tín dụng.<br />
+                <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mb-2 sm:mb-3">Hướng dẫn đăng ký</h2>
+                <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed px-4">
+                    Hướng dẫn chi tiết từng bước để đăng ký các sản phẩm vay và thẻ tín dụng.<br className="hidden sm:block" />
                     Chọn sản phẩm bạn quan tâm để xem hành trình đăng ký cụ thể.
                 </p>
             </div>
@@ -43,21 +44,21 @@ const RegistrationGuide: React.FC<RegistrationGuideProps> = ({ projects }) => {
                             {/* Accordion Header */}
                             <button
                                 onClick={() => toggleExpand(project.id)}
-                                className="w-full p-6 flex items-center justify-between hover:bg-slate-50 transition-colors"
+                                className="w-full p-4 sm:p-6 flex items-center justify-between hover:bg-slate-50 transition-colors"
                             >
-                                <div className="flex items-center gap-4">
-                                    <div className="w-14 h-14 bg-slate-50 rounded-full border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
+                                <div className="flex items-center gap-3 sm:gap-4">
+                                    <div className="w-10 h-10 sm:w-14 sm:h-14 bg-slate-50 rounded-full border-2 border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
                                         <img src={project.logo} alt={project.name} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="text-left">
-                                        <h3 className="text-lg font-black text-slate-800">Hướng dẫn {project.name}</h3>
-                                        <p className="text-xs text-slate-500 font-medium mt-1">
+                                        <h3 className="text-sm sm:text-lg font-black text-slate-800">{project.name}</h3>
+                                        <p className="text-[10px] sm:text-xs text-slate-500 font-medium mt-0.5 sm:mt-1">
                                             {project.type === 'LOAN' ? 'Vay tiêu dùng' : 'Thẻ tín dụng'} • {project.steps.length} bước
                                         </p>
                                     </div>
                                 </div>
-                                <div className={`p-2 bg-slate-100 rounded-full transition-transform ${isExpanded ? 'rotate-180' : ''}`}>
-                                    {isExpanded ? <ChevronDown size={20} className="text-blue-600" /> : <ChevronRight size={20} className="text-slate-400" />}
+                                <div className={`p-1.5 sm:p-2 bg-slate-100 rounded-full transition-transform ${isExpanded ? 'rotate-180' : ''}`}>
+                                    {isExpanded ? <ChevronDown size={18} className="sm:w-5 sm:h-5 text-blue-600" /> : <ChevronRight size={18} className="sm:w-5 sm:h-5 text-slate-400" />}
                                 </div>
                             </button>
 

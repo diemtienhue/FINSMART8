@@ -17,7 +17,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ project, onClose }) => {
     if (text.toUpperCase().includes('SĐT')) {
       finalCode = text.split('+')[0].trim();
     }
-    
+
     navigator.clipboard.writeText(finalCode);
     alert(`Đã sao chép mã: ${finalCode}`);
   };
@@ -36,7 +36,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ project, onClose }) => {
           <p className="text-[10px] text-amber-700 font-bold leading-relaxed">
             <span className="text-amber-800 uppercase font-black">Ví dụ cụ thể:</span><br />
             Khách hàng có số điện thoại: <span className="text-blue-600">0988335555</span><br />
-            Thì bạn Nhập đúng mã giới thiệu là: 
+            Thì bạn Nhập đúng mã giới thiệu là:
             <span className="bg-white px-1.5 py-0.5 rounded border border-amber-200 font-black ml-1 text-blue-700">"{prefix}0988335555"</span>
           </p>
           <p className="text-[9px] text-slate-400 mt-1.5 italic">
@@ -50,36 +50,36 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ project, onClose }) => {
 
   // Danh sách các bước cố định theo yêu cầu cho tab Hướng dẫn
   const fixedSteps = [
-    { 
-      title: `BƯỚC 1: ĐĂNG KÝ`, 
-      desc: `Ấn vào nút "${ctaText}" bên dưới để chuyển hướng đăng ký hồ sơ chính thức với đối tác thông qua Finsmart.` 
+    {
+      title: `BƯỚC 1: ĐĂNG KÝ`,
+      desc: `Ấn vào nút "${ctaText}" bên dưới để chuyển hướng đăng ký hồ sơ chính thức với đối tác thông qua Finsmart.`
     },
-    { 
-      title: `BƯỚC 2: TẢI ỨNG DỤNG`, 
-      desc: `Hệ thống điều hướng bạn đến cửa hàng ứng dụng (CHPlay/iOS). Hãy tải App chính thức của ${project.name.split(' ')[0]} về máy.` 
+    {
+      title: `BƯỚC 2: TẢI ỨNG DỤNG`,
+      desc: `Hệ thống điều hướng bạn đến cửa hàng ứng dụng (CHPlay/iOS). Hãy tải App chính thức của ${project.name.split(' ')[0]} về máy.`
     },
-    { 
-      title: `BƯỚC 3: NHẬP MÃ GIỚI THIỆU`, 
-      desc: project.referralCode ? `📌 Quan trọng: Nhập mã giới thiệu để hệ thống ghi nhận bạn là khách hàng ưu tiên của Finsmart.` : `Lưu ý: Dự án này hiện không yêu cầu mã giới thiệu từ hệ thống.` 
+    {
+      title: `BƯỚC 3: NHẬP MÃ GIỚI THIỆU`,
+      desc: project.referralCode ? `📌 Quan trọng: Nhập mã giới thiệu để hệ thống ghi nhận bạn là khách hàng ưu tiên của Finsmart.` : `Lưu ý: Dự án này hiện không yêu cầu mã giới thiệu từ hệ thống.`
     },
-    { 
-      title: `BƯỚC 4: ĐIỀN THÔNG TIN`, 
-      desc: `Tiến hành eKYC (chụp ảnh CCCD) và điền các thông tin cá nhân cơ bản để tổ chức thực hiện phê duyệt tự động.` 
+    {
+      title: `BƯỚC 4: ĐIỀN THÔNG TIN`,
+      desc: `Tiến hành eKYC (chụp ảnh CCCD) và điền các thông tin cá nhân cơ bản để tổ chức thực hiện phê duyệt tự động.`
     },
-    { 
-      title: `BƯỚC 5: HOÀN TẤT`, 
-      desc: `Chờ thẩm định trong 5-15 phút. Sau khi duyệt, bạn có thể nhận tiền giải ngân hoặc kích hoạt thẻ sử dụng ngay.` 
+    {
+      title: `BƯỚC 5: HOÀN TẤT`,
+      desc: `Chờ thẩm định trong 5-15 phút. Sau khi duyệt, bạn có thể nhận tiền giải ngân hoặc kích hoạt thẻ sử dụng ngay.`
     }
   ];
 
   return (
     <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/70 backdrop-blur-sm transition-opacity animate-in fade-in duration-300">
       <div className="bg-white w-full max-w-lg h-[92vh] sm:h-auto sm:max-h-[95vh] rounded-t-[32px] sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-in slide-in-from-bottom duration-500 border-x border-t border-slate-100 relative">
-        
+
         {/* Header */}
         <div className="p-6 border-b border-slate-50 flex items-center justify-between shrink-0 bg-white">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-slate-50 p-2 rounded-xl border border-slate-100 flex items-center justify-center shadow-sm">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-16 h-16 bg-white rounded-full border-2 border-slate-200 flex items-center justify-center overflow-hidden shrink-0 shadow-md">
               <img src={project.logo} className="w-full h-full object-contain" alt="logo" />
             </div>
             <div>
@@ -103,11 +103,10 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ project, onClose }) => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`flex-1 py-3 flex flex-col items-center gap-1.5 rounded-2xl transition-all ${
-                activeTab === tab.id 
-                ? 'bg-white text-blue-600 shadow-sm border border-slate-200/50' 
-                : 'text-slate-400 hover:text-slate-600'
-              }`}
+              className={`flex-1 py-3 flex flex-col items-center gap-1.5 rounded-2xl transition-all ${activeTab === tab.id
+                  ? 'bg-white text-blue-600 shadow-sm border border-slate-200/50'
+                  : 'text-slate-400 hover:text-slate-600'
+                }`}
             >
               <tab.icon size={16} />
               <span className="text-[9px] font-black uppercase tracking-tight">{tab.label}</span>
@@ -117,7 +116,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ project, onClose }) => {
 
         {/* Tab Content */}
         <div className="flex-1 overflow-y-auto p-5 space-y-8 scrollbar-hide bg-white pb-24">
-          
+
           {/* TAB 1: GIỚI THIỆU & HƯỚNG DẪN CHI TIẾT */}
           {activeTab === 'intro' && (
             <div className="animate-in fade-in slide-in-from-left-2 duration-300 space-y-8">
@@ -162,7 +161,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ project, onClose }) => {
                         <div className="flex-1 space-y-2">
                           <h4 className="text-[11px] font-black text-blue-600 uppercase tracking-tighter">{step.title}</h4>
                           <p className="text-[11px] text-slate-500 font-semibold leading-relaxed">{step.desc}</p>
-                          
+
                           {/* Bước 3: Mã giới thiệu trong tab Hướng dẫn */}
                           {idx === 2 && (
                             <div className="mt-4 animate-in zoom-in duration-300">
@@ -174,7 +173,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ project, onClose }) => {
                                       <div className="flex-1 bg-white px-4 py-2.5 rounded-xl border border-amber-200 shadow-inner flex items-center justify-center overflow-hidden">
                                         <span className="text-xs font-black text-slate-800 tracking-widest truncate">{project.referralCode}</span>
                                       </div>
-                                      <button 
+                                      <button
                                         onClick={() => copyToClipboard(project.referralCode!)}
                                         className="px-4 py-2.5 bg-blue-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 active:scale-95 transition-all shadow-lg shadow-blue-200 flex items-center gap-2 shrink-0"
                                       >
@@ -210,8 +209,8 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ project, onClose }) => {
                             <img src={project.steps[idx].image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="step" />
                           ) : (
                             <div className="w-full h-full flex flex-col items-center justify-center opacity-20 bg-slate-200">
-                               <ImageIcon size={20} />
-                               <span className="text-[8px] font-bold mt-1">NO IMAGE</span>
+                              <ImageIcon size={20} />
+                              <span className="text-[8px] font-bold mt-1">NO IMAGE</span>
                             </div>
                           )}
                         </div>
@@ -228,7 +227,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ project, onClose }) => {
           {activeTab === 'tips' && (
             <div className="animate-in fade-in slide-in-from-right-2 duration-300 space-y-6">
               <p className="text-xs font-black text-slate-800 uppercase border-l-4 border-emerald-500 pl-3 tracking-widest">Mẹo để hồ sơ được duyệt 100%</p>
-              
+
               <div className="bg-white rounded-[2rem] border border-slate-200 overflow-hidden shadow-md">
                 <div className="bg-slate-50/50 p-6 space-y-8">
                   {/* Tip 1 */}
@@ -266,42 +265,42 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ project, onClose }) => {
                           </div>
                         </div>
                       </div>
-                      
+
                       <div className="space-y-3">
                         <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-100 shadow-sm space-y-3">
-                           <p className="text-[10px] text-slate-700 font-black leading-relaxed uppercase tracking-tighter">
-                             Tại sao cần nhập đúng mã giới thiệu?
-                           </p>
-                           <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
-                             Nhập đúng mã giới thiệu giúp hệ thống ghi nhận bạn là khách hàng ưu tiên của Finsmart. Đồng thời Mã giới thiệu giúp tăng tỷ lệ duyệt và nhận kết quả nhanh hơn.
-                           </p>
+                          <p className="text-[10px] text-slate-700 font-black leading-relaxed uppercase tracking-tighter">
+                            Tại sao cần nhập đúng mã giới thiệu?
+                          </p>
+                          <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
+                            Nhập đúng mã giới thiệu giúp hệ thống ghi nhận bạn là khách hàng ưu tiên của Finsmart. Đồng thời Mã giới thiệu giúp tăng tỷ lệ duyệt và nhận kết quả nhanh hơn.
+                          </p>
 
-                           {project.referralCode ? (
-                             <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-blue-100/50">
-                               <div className="flex items-center justify-between gap-3">
-                                  {/* Bên trái: Nút nhỏ chứa mã */}
-                                  <div className="flex-1 bg-white px-3 py-2 rounded-xl border border-blue-200 shadow-inner flex items-center justify-center overflow-hidden">
-                                     <span className="text-[10px] font-black text-slate-800 tracking-widest truncate">
-                                      Mã của dự án là: {project.referralCode}
-                                     </span>
-                                  </div>
-                                  {/* Bên phải: Nút copy nhỏ */}
-                                  <button 
-                                    onClick={() => copyToClipboard(project.referralCode!)}
-                                    className="px-3 py-2 bg-blue-600 text-white rounded-xl font-black text-[9px] uppercase tracking-widest hover:bg-blue-700 active:scale-95 transition-all shadow-md flex items-center gap-1.5 shrink-0"
-                                  >
-                                    <Copy size={12} /> Copy mã
-                                  </button>
-                               </div>
-                               
-                               {/* Ví dụ mã động - CHỈ HIỂN THỊ Ở ĐÂY */}
-                               {renderReferralExample()}
-                             </div>
-                           ) : (
-                             <div className="p-2 bg-slate-100 rounded-lg text-center">
-                               <span className="text-[10px] font-black text-slate-400 uppercase italic">Dự án không yêu cầu mã</span>
-                             </div>
-                           )}
+                          {project.referralCode ? (
+                            <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-blue-100/50">
+                              <div className="flex items-center justify-between gap-3">
+                                {/* Bên trái: Nút nhỏ chứa mã */}
+                                <div className="flex-1 bg-white px-3 py-2 rounded-xl border border-blue-200 shadow-inner flex items-center justify-center overflow-hidden">
+                                  <span className="text-[10px] font-black text-slate-800 tracking-widest truncate">
+                                    Mã của dự án là: {project.referralCode}
+                                  </span>
+                                </div>
+                                {/* Bên phải: Nút copy nhỏ */}
+                                <button
+                                  onClick={() => copyToClipboard(project.referralCode!)}
+                                  className="px-3 py-2 bg-blue-600 text-white rounded-xl font-black text-[9px] uppercase tracking-widest hover:bg-blue-700 active:scale-95 transition-all shadow-md flex items-center gap-1.5 shrink-0"
+                                >
+                                  <Copy size={12} /> Copy mã
+                                </button>
+                              </div>
+
+                              {/* Ví dụ mã động - CHỈ HIỂN THỊ Ở ĐÂY */}
+                              {renderReferralExample()}
+                            </div>
+                          ) : (
+                            <div className="p-2 bg-slate-100 rounded-lg text-center">
+                              <span className="text-[10px] font-black text-slate-400 uppercase italic">Dự án không yêu cầu mã</span>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -328,8 +327,8 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ project, onClose }) => {
               </div>
 
               <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-100 flex items-start gap-3 shadow-inner">
-                 <ShieldCheck size={18} className="text-emerald-500 shrink-0 mt-0.5" />
-                 <p className="text-[10px] text-emerald-700 font-bold leading-relaxed">Lưu ý: Tuân thủ đúng 5 mẹo trên sẽ giúp tỷ lệ phê duyệt hồ sơ của bạn đạt mức tối đa ngay lần đầu tiên.</p>
+                <ShieldCheck size={18} className="text-emerald-500 shrink-0 mt-0.5" />
+                <p className="text-[10px] text-emerald-700 font-bold leading-relaxed">Lưu ý: Tuân thủ đúng 5 mẹo trên sẽ giúp tỷ lệ phê duyệt hồ sơ của bạn đạt mức tối đa ngay lần đầu tiên.</p>
               </div>
             </div>
           )}
@@ -348,11 +347,11 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ project, onClose }) => {
                   ))}
                 </div>
               </div>
-              
+
               <div className="p-5 bg-slate-50 rounded-[2rem] border border-slate-200 text-slate-600 space-y-3 shadow-sm">
                 <div className="flex items-center gap-2">
-                   <AlertTriangle size={16} className="text-amber-500" />
-                   <span className="text-[10px] font-black uppercase tracking-widest text-slate-800">Lưu ý</span>
+                  <AlertTriangle size={16} className="text-amber-500" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-800">Lưu ý</span>
                 </div>
                 <p className="text-[10px] text-slate-500 leading-relaxed font-bold">
                   Tổ chức tài chính có quyền từ chối phê duyệt hồ sơ nếu phát hiện thông tin khai báo không trung thực hoặc lịch sử tín dụng CIC không đạt tiêu chuẩn. Finsmart là nền tảng so sánh độc lập, không tham gia trực tiếp vào quá trình thẩm định.
