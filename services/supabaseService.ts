@@ -16,28 +16,28 @@ interface ProjectRow {
     type: 'LOAN' | 'CREDIT_CARD';
     logo: string;
     cover_image: string;
-    limit_amount: string;
+    limit: string;  // Changed from limit_amount
     interest_rate: string;
     interest_free_period: string | null;
     description: string;
-    advantages: string[];
+    advantages: any;  // Changed from string[] to JSONB
     promo: string;
     affiliate_link: string;
     referral_code: string | null;
     tutorial_video_url: string | null;
     tutorial_file_url: string | null;
-    eligibility: string[];
+    eligibility: any;  // Changed from string[] to JSONB
     bank_phone: string | null;
     bank_website: string | null;
     bank_intro: string | null;
-    payment_channels: string[] | null;
+    payment_channels: any | null;  // JSONB
     steps: {
         title: string;
         description: string;
         image: string;
     }[];
     status: 'Published' | 'Draft';
-    order_index: number;
+    order: number;  // Changed from order_index
     rating: number | null;
     user_count: string | null;
     created_at: string;
@@ -57,24 +57,24 @@ const mapRowToProject = (row: ProjectRow): Project => ({
     type: row.type as ProjectType,
     logo: row.logo,
     coverImage: row.cover_image,
-    limit: row.limit_amount,
+    limit: row.limit,  // Changed
     interestRate: row.interest_rate,
     interestFreePeriod: row.interest_free_period || undefined,
     description: row.description,
-    advantages: row.advantages,
+    advantages: Array.isArray(row.advantages) ? row.advantages : [],  // Handle JSONB
     promo: row.promo,
     affiliateLink: row.affiliate_link,
     referralCode: row.referral_code || undefined,
     tutorialVideoUrl: row.tutorial_video_url || undefined,
     tutorialFileUrl: row.tutorial_file_url || undefined,
-    eligibility: row.eligibility,
+    eligibility: Array.isArray(row.eligibility) ? row.eligibility : [],  // Handle JSONB
     bankPhone: row.bank_phone || undefined,
     bankWebsite: row.bank_website || undefined,
     bankIntro: row.bank_intro || undefined,
     paymentChannels: row.payment_channels || undefined,
     steps: row.steps,
     status: row.status,
-    order: row.order_index,
+    order: row.order,  // Changed
     rating: row.rating || undefined,
     userCount: row.user_count || undefined,
 });
@@ -88,24 +88,24 @@ const mapProjectToRow = (project: Project): Record<string, unknown> => ({
     type: project.type,
     logo: project.logo,
     cover_image: project.coverImage,
-    limit_amount: project.limit,
+    limit: project.limit,  // Changed
     interest_rate: project.interestRate,
     interest_free_period: project.interestFreePeriod || null,
     description: project.description,
-    advantages: project.advantages,
+    advantages: project.advantages,  // JSONB
     promo: project.promo,
     affiliate_link: project.affiliateLink,
     referral_code: project.referralCode || null,
     tutorial_video_url: project.tutorialVideoUrl || null,
     tutorial_file_url: project.tutorialFileUrl || null,
-    eligibility: project.eligibility,
+    eligibility: project.eligibility,  // JSONB
     bank_phone: project.bankPhone || null,
     bank_website: project.bankWebsite || null,
     bank_intro: project.bankIntro || null,
     payment_channels: project.paymentChannels || null,
     steps: project.steps,
     status: project.status,
-    order_index: project.order,
+    order: project.order,  // Changed
     rating: project.rating || null,
     user_count: project.userCount || null,
 });
@@ -121,7 +121,7 @@ export const getAllProjects = async (): Promise<Project[]> => {
     const { data, error } = await supabase
         .from('projects')
         .select('*')
-        .order('order_index', { ascending: true });
+        .order('order', { ascending: true });
 
     if (error) {
         console.error('Error fetching projects:', error);
@@ -140,7 +140,7 @@ export const getProjectsByType = async (type: ProjectType): Promise<Project[]> =
         .select('*')
         .eq('type', type)
         .eq('status', 'Published')
-        .order('order_index', { ascending: true });
+        .order('order', { ascending: true });
 
     if (error) {
         console.error('Error fetching projects by type:', error);
@@ -197,7 +197,7 @@ export const updateProject = async (id: string, project: Partial<Project>): Prom
     if (project.type !== undefined) updateData.type = project.type;
     if (project.logo !== undefined) updateData.logo = project.logo;
     if (project.coverImage !== undefined) updateData.cover_image = project.coverImage;
-    if (project.limit !== undefined) updateData.limit_amount = project.limit;
+    if (project.limit !== undefined) updateData.limit = project.limit;  // Changed
     if (project.interestRate !== undefined) updateData.interest_rate = project.interestRate;
     if (project.interestFreePeriod !== undefined) updateData.interest_free_period = project.interestFreePeriod;
     if (project.description !== undefined) updateData.description = project.description;
@@ -214,7 +214,7 @@ export const updateProject = async (id: string, project: Partial<Project>): Prom
     if (project.paymentChannels !== undefined) updateData.payment_channels = project.paymentChannels;
     if (project.steps !== undefined) updateData.steps = project.steps;
     if (project.status !== undefined) updateData.status = project.status;
-    if (project.order !== undefined) updateData.order_index = project.order;
+    if (project.order !== undefined) updateData.order = project.order;  // Changed
     if (project.rating !== undefined) updateData.rating = project.rating;
     if (project.userCount !== undefined) updateData.user_count = project.userCount;
 
