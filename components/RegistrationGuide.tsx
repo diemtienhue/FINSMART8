@@ -17,28 +17,28 @@ const RegistrationGuide: React.FC<RegistrationGuideProps> = ({ projects }) => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="max-w-5xl mx-auto px-3 sm:px-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {/* Header */}
-            <div className="text-center mb-10">
-                <div className="w-16 h-16 bg-blue-600 text-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
-                    <FileText size={32} />
+            <div className="text-center mb-8">
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-2xl shadow-blue-200">
+                    <FileText size={36} strokeWidth={2.5} />
                 </div>
-                <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-3 uppercase">Hướng dẫn đăng ký</h2>
-                <p className="text-slate-500 font-medium max-w-2xl mx-auto">
-                    Hướng dẫn chi tiết từng bước để đăng ký các sản phẩm vay và thẻ tín dụng.
+                <h2 className="text-4xl font-black text-slate-900 tracking-tight mb-3">Hướng dẫn đăng ký</h2>
+                <p className="text-slate-600 font-medium max-w-2xl mx-auto text-sm leading-relaxed">
+                    Hướng dẫn chi tiết từng bước để đăng ký các sản phẩm vay và thẻ tín dụng.<br />
                     Chọn sản phẩm bạn quan tâm để xem hành trình đăng ký cụ thể.
                 </p>
             </div>
 
             {/* Guide Cards */}
-            <div className="space-y-4">
+            <div className="space-y-3">
                 {guideProjects.map((project) => {
                     const isExpanded = expandedId === project.id;
 
                     return (
                         <div
                             key={project.id}
-                            className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden transition-all hover:shadow-md"
+                            className="bg-white rounded-3xl border-2 border-slate-100 shadow-sm overflow-hidden transition-all hover:shadow-lg hover:border-blue-200"
                         >
                             {/* Accordion Header */}
                             <button

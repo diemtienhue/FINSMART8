@@ -325,22 +325,24 @@ const App: React.FC = () => {
         </main>
       </div>
 
-      {/* Bottom Navigation Mobile */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white border-t border-slate-100 h-16 flex items-center justify-around shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+      {/* BOTTOM NAVIGATION - MOBILE */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white/95 backdrop-blur-md border-t border-slate-200 h-16 flex items-center justify-around shadow-[0_-2px_10px_rgba(0,0,0,0.08)]">
         {[
           { id: 'home', label: 'Trang chủ', icon: Home },
           { id: 'cards', label: 'Thẻ', icon: CreditCard },
           { id: 'loans', label: 'Vay', icon: DollarSign },
           { id: 'insurance', label: 'Bảo hiểm', icon: Shield },
-          { id: 'profile', label: 'Hướng dẫn', icon: FileText },
+          { id: 'comparison', label: 'So sánh', icon: Layers },
         ].map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)}
-            className={`flex flex-col items-center gap-1 transition-all ${activeTab === tab.id ? 'text-blue-600' : 'text-slate-400'}`}
+            className={`flex flex-col items-center justify-center gap-1 px-3 py-1.5 transition-all duration-200 ${activeTab === tab.id ? 'text-blue-600 scale-110' : 'text-slate-500 hover:text-blue-500 hover:scale-105'
+              }`}
           >
-            <tab.icon size={20} className={activeTab === tab.id ? 'scale-110' : ''} />
-            <span className="text-[9px] font-black uppercase tracking-tighter">{tab.label}</span>
+            <tab.icon size={22} strokeWidth={activeTab === tab.id ? 2.5 : 2} className="transition-all" />
+            <span className={`text-[10px] font-bold transition-all ${activeTab === tab.id ? 'opacity-100' : 'opacity-75'
+              }`}>{tab.label}</span>
           </button>
         ))}
       </nav>
@@ -349,20 +351,70 @@ const App: React.FC = () => {
       {isSidebarOpen && (
         <div className="fixed inset-0 z-[100] lg:hidden animate-in fade-in duration-300">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsSidebarOpen(false)} />
-          <aside className="absolute top-0 right-0 bottom-0 w-3/4 bg-white shadow-2xl animate-in slide-in-from-right duration-500 flex flex-col p-6">
-            <div className="flex justify-between items-center mb-8">
-              <span className="text-xl font-bold">Menu Hệ Thống</span>
-              <button onClick={() => setIsSidebarOpen(false)} className="p-2 bg-slate-100 rounded-full"><X size={20} /></button>
+          <aside className="absolute top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-gradient-to-b from-white to-slate-50 shadow-2xl animate-in slide-in-from-right duration-500 flex flex-col">
+            {/* Header */}
+            <div className="flex justify-between items-center p-6 border-b border-slate-200 bg-white">
+              <h2 className="text-xl font-black text-slate-800">Danh mục</h2>
+              <button
+                onClick={() => setIsSidebarOpen(false)}
+                className="p-2 bg-slate-100 rounded-2xl hover:bg-slate-200 transition-all hover:rotate-90"
+              >
+                <X size={20} className="text-slate-600" />
+              </button>
             </div>
-            <nav className="space-y-4">
-              <div className="p-5 bg-slate-50 rounded-[2rem] border border-slate-100">
-                <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-4 text-center">Liên hệ hỗ trợ</p>
-                <div className="flex items-center justify-center gap-6">
-                  <button onClick={handlePhoneCall} title="Gọi: 0337.502.217" className="w-12 h-12 bg-emerald-600 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"><Phone size={20} /></button>
-                  <button onClick={handleZaloChat} title="Chat Zalo: 0337.502.217" className="w-12 h-12 bg-gradient-to-br from-[#0068ff] to-[#0052cc] text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"><MessageCircle size={20} /></button>
-                </div>
-              </div>
+
+            {/* Menu Items */}
+            <nav className="flex-1 overflow-y-auto p-6 space-y-2">
+              {[
+                { id: 'cards', label: 'Thẻ tín dụng', icon: CreditCard, color: 'blue' },
+                { id: 'loans', label: 'Vay tiêu dùng', icon: DollarSign, color: 'emerald' },
+                { id: 'insurance', label: 'Bảo hiểm ô tô giá rẻ', icon: Shield, color: 'purple' },
+                { id: 'profile', label: 'Hướng dẫn đăng ký', icon: FileText, color: 'orange' },
+              ].map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActiveTab(item.id as any);
+                    setIsSidebarOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all hover:scale-[1.02] ${activeTab === item.id
+                      ? `bg-${item.color}-50 text-${item.color}-700 shadow-sm`
+                      : 'bg-white hover:bg-slate-100 text-slate-700'
+                    }`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${activeTab === item.id ? `bg-${item.color}-100` : 'bg-slate-100'
+                    }`}>
+                    <item.icon size={20} />
+                  </div>
+                  <span className="font-bold text-sm">{item.label}</span>
+                </button>
+              ))}
             </nav>
+
+            {/* Footer - Contact Support */}
+            <div className="p-6 border-t border-slate-200 bg-white">
+              <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-3 text-center">
+                Liên hệ hỗ trợ
+              </p>
+              <div className="flex items-center justify-center gap-4">
+                <button
+                  onClick={handlePhoneCall}
+                  title="Gọi: 0337.502.217"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-emerald-600 text-white rounded-2xl shadow-lg hover:scale-105 transition-transform"
+                >
+                  <Phone size={18} />
+                  <span className="text-xs font-bold">Gọi ngay</span>
+                </button>
+                <button
+                  onClick={handleZaloChat}
+                  title="Chat Zalo: 0337.502.217"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-br from-[#0068ff] to-[#0052cc] text-white rounded-2xl shadow-lg hover:scale-105 transition-transform"
+                >
+                  <MessageCircle size={18} />
+                  <span className="text-xs font-bold">Chat Zalo</span>
+                </button>
+              </div>
+            </div>
           </aside>
         </div>
       )}
