@@ -10,6 +10,7 @@ import RegistrationGuide from './components/RegistrationGuide';
 import PartnerSlider from './components/PartnerSlider';
 import { Project, ProjectType } from './types';
 import { INITIAL_PROJECTS, SUPPORT_ZALO } from './constants';
+import { getAllProjects, getHeroSettings } from './services/supabaseService';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'home' | 'loans' | 'cards' | 'comparison' | 'calc' | 'insurance' | 'profile'>('home');
@@ -67,6 +68,31 @@ const App: React.FC = () => {
       window.removeEventListener('hashchange', checkAdminAccess);
       window.removeEventListener('popstate', checkAdminAccess);
     };
+  }, []);
+
+  // Fetch data from Supabase on mount
+  useEffect(() => {
+    const loadDataFromSupabase = async () => {
+      try {
+        // Fetch projects from Supabase Database
+        const dbProjects = await getAllProjects();
+        if (dbProjects && dbProjects.length > 0) {
+          setProjects(dbProjects);
+          localStorage.setItem('finsmart_projects', JSON.stringify(dbProjects));
+        }
+
+        // Fetch hero settings from Supabase
+        const heroData = await getHeroSettings();
+        if (heroData) {
+          setAppSettings(heroData);
+          localStorage.setItem('finsmart_app_settings', JSON.stringify(heroData));
+        }
+      } catch (error) {
+        console.warn('Supabase fetch error, using localStorage/fallback:', error);
+      }
+    };
+
+    loadDataFromSupabase();
   }, []);
 
   const filteredProjects = projects.filter(p => {

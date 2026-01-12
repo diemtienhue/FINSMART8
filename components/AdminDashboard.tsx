@@ -9,6 +9,7 @@ import {
   ChevronRight, BarChart3, Database, Globe, Smartphone, PlayCircle, Upload, Link2, Camera, FileUp, Zap, MousePointer2, CheckCircle2, HelpCircle,
   Layout, Eye, RefreshCw, Layers, PhoneCall, MessageSquare, Loader2
 } from 'lucide-react';
+import { uploadImage, syncAllProjects, updateHeroSettings } from '../services/supabaseService';
 import ProjectCard from './ProjectCard';
 import ProductPopup from './ProductPopup';
 
@@ -17,20 +18,10 @@ import ProductPopup from './ProductPopup';
  * Đây là cấu trúc chuẩn để bạn đấu nối Supabase sau này
  */
 const uploadImageToSupabase = async (file: File): Promise<string> => {
-  // 1. Giả lập delay mạng khi upload lên Storage
-  await new Promise(resolve => setTimeout(resolve, 1500));
-
-  // 2. Trong thực tế, đây sẽ là code: 
-  // const { data, error } = await supabase.storage.from('images').upload(path, file)
-  // return supabase.storage.from('images').getPublicUrl(path).data.publicUrl;
-
-  // Giả lập trả về một URL (ở đây dùng tạm FileReader để hiển thị nhưng logic là trả về URL)
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result as string);
-    reader.readAsDataURL(file);
-  });
+  // Upload to Supabase Storage bucket 'public_assets'
+  return await uploadImage(file, 'public_assets', 'projects');
 };
+
 
 // ImageUploader Component (Supabase Ready Version)
 const ImageUploader: React.FC<{
@@ -130,16 +121,25 @@ const AdminDashboard: React.FC = () => {
 
   const syncWithDatabase = async () => {
     setIsSyncing(true);
-    // Lưu app settings vào localStorage để sync với trang chủ
-    localStorage.setItem('finsmart_app_settings', JSON.stringify(appSettings));
-    // Lưu projects vào localStorage
-    localStorage.setItem('finsmart_projects', JSON.stringify(projects));
-    // QUY TRÌNH: LẤY TOÀN BỘ URL TRONG STATE -> LƯU VÀO SUPABASE DB TABLE
-    await new Promise(r => setTimeout(r, 1500));
-    setIsSyncing(false);
-    // Trigger storage event để các tab khác cập nhật
-    window.dispatchEvent(new Event('storage'));
-    alert('Đã đồng bộ hóa dữ liệu thành công! Vui lòng refresh trang để xem thay đổi.');
+    try {
+      // Sync projects to Supabase Database
+      await syncAllProjects(projects);
+
+      // Sync hero settings to Supabase
+      await updateHeroSettings(appSettings);
+
+      // Also save to localStorage as backup
+      localStorage.setItem('finsmart_app_settings', JSON.stringify(appSettings));
+      localStorage.setItem('finsmart_projects', JSON.stringify(projects));
+
+      setIsSyncing(false);
+      window.dispatchEvent(new Event('storage'));
+      alert('✅ Đã đồng bộ dữ liệu lên cloud thành công!');
+    } catch (error) {
+      setIsSyncing(false);
+      console.error('Sync error:', error);
+      alert('❌ Lỗi đồng bộ: ' + (error as Error).message);
+    }
   };
 
   const handleSaveProject = () => {
